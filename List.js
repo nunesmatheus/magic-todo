@@ -2,17 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default class List extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      list: props.list
-    }
-  }
-
   render() {
     return (
       <View style={styles.container}>
-        {this.state.list.map(this.renderItem)}
+        {this.props.list.map(this.renderItem)}
       </View>
     )
   }

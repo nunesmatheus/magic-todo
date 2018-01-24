@@ -3,15 +3,30 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import Title from './Title'
 import List from './List'
+import Input from './Input'
 
 export default class App extends React.Component {
+
+  state = {
+    list: ['Clean the dishes', 'Do the laundry']
+  }
+
   render() {
     return (
       <View>
         <Title text="Magic To Do"></Title>
-        <List list={['Clean the dishes', 'Do the laundry']}></List>
+        <Input placeholder="New task name" submit={this.onSubmitEditing}></Input>
+        <List list={this.state.list}></List>
       </View>
     );
+  }
+
+  onSubmitEditing = (text) => {
+    const {list} = this.state
+
+    this.setState({
+      list: [...list, text]
+    })
   }
 }
 
@@ -22,5 +37,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginTop: 30
-  },
+  }
 });
