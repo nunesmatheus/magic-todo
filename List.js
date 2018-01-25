@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class List extends Component {
   render() {
@@ -10,9 +10,13 @@ export default class List extends Component {
     )
   }
 
-  renderItem(text) {
+  renderItem = (text, i) => {
+    const {onPressItem} = this.props
+
     return (
-      <Text style={styles.text}>{text}</Text>
+      <TouchableOpacity onPress={() => onPressItem(i)}>
+        <Text style={styles.text}>{text}</Text>
+      </TouchableOpacity>
     )
   }
 }

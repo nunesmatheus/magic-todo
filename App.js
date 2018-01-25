@@ -16,7 +16,7 @@ export default class App extends React.Component {
       <View>
         <Title text="Magic To Do"></Title>
         <Input placeholder="New task name" submit={this.onSubmitEditing}></Input>
-        <List list={this.state.list}></List>
+        <List list={this.state.list} onPressItem={this.onPressItem}></List>
       </View>
     );
   }
@@ -26,6 +26,16 @@ export default class App extends React.Component {
 
     this.setState({
       list: [...list, text]
+    })
+  }
+
+  onPressItem = (i) => {
+    list_copy = [...this.state.list]
+    list_copy.splice(i, 1)
+
+    this.setState({
+      // list: ['teste']
+      list: list_copy
     })
   }
 }
