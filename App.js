@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 
 import Title from './Title'
 import List from './List'
@@ -8,7 +8,7 @@ import Input from './Input'
 export default class App extends React.Component {
 
   state = {
-    list: ['Clean the dishes', 'Do the laundry']
+    list: []
   }
 
   render() {
@@ -21,20 +21,38 @@ export default class App extends React.Component {
     );
   }
 
-  onSubmitEditing = (text) => {
+  componentWillMount () {
+    this.load()
+  }
+
+  load = async () => {
+    const list = JSON.parse(await AsyncStorage.getItem('list'))
+
+    if(list !== null) {
+      this.setState({
+        list: list
+      })
+    }
+  }
+
+  onSubmitEditing = async (text) => {
     const {list} = this.state
 
+    let new_list = [...list, text]
+    await AsyncStorage.setItem('list', JSON.stringify(new_list))
+
     this.setState({
-      list: [...list, text]
+      list: new_list
     })
   }
 
-  onPressItem = (i) => {
-    list_copy = [...this.state.list]
+  onPressItem = async (i) => {
+    let list_copy = [...this.state.list]
     list_copy.splice(i, 1)
 
+    await AsyncStorage.setItem('list', JSON.stringify(list_copy))
+
     this.setState({
-      // list: ['teste']
       list: list_copy
     })
   }
